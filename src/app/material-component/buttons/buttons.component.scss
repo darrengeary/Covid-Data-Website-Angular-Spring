@@ -1,0 +1,38 @@
+.example-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.html{
+  padding:0 !important;
+}
+
+.box{
+  text-align: center;
+  border-color: black;
+
+}
+.quick-facts{
+  text-align:center!important;
+  background-color: #ffffff;
+  padding: 0;
+}
+.box h3{
+  font-size: 200%;
+  margin: 0;
+}
+.box p{
+  margin-bottom:10%;
+  text-align:center!important;
+  font-style:white;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell{
+  padding:10px;
+}
+.ageChart{
+  padding-left: 10px;
+  padding-right:10px;
+  padding-top:0;
+  padding-bottom:0;
+}

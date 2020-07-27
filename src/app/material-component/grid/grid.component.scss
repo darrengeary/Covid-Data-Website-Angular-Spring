@@ -1,0 +1,13 @@
+mat-grid-tile {
+  background: lightblue;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+app-root, agm-map {
+  height: 500px;
+}
+body { margin: 0; padding: 0; }
+#myMap { position: absolute; top: 0; bottom: 0; width: 100%; }

@@ -1,0 +1,170 @@
+<!-- ============================================================== -->
+<!-- Simple four boxes Row -->
+<!-- ============================================================== -->
+<div fxLayout="row wrap">
+    <!-- column -->    
+    <div fxFlexOrder.xs="2" fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+            <mat-card-content style="margin:0;">
+                <div class="d-flex flex-wrap" fxLayout.xs="column" fxLayoutAlign="space-between none">
+                        <div>
+                        <mat-card-title>Covid 19 Cases: {{this.selectedCountry.country}}</mat-card-title>
+                         <mat-card-subtitle>Daily Statistics</mat-card-subtitle> 
+                        </div>
+                        <span flex></span>
+                        <div fxHide fxShow.gt-xs>
+                            <button _ngcontent-lyf-c302="" mat-raised-button="" color="warn" class="mat-focus-indicator mat-raised-button mat-button-base mat-warn" ng-reflect-color="warn" [matMenuTriggerFor]="countries">Change Country</button>
+                            <mat-menu id="chartType" name="Chart Type" #countries="matMenu">
+                                      <button mat-menu-item  *ngFor="let item of timeSeries" value="item" let i = "index"  (click)="selectCountry(item.country)">{{ item.country }}</button>
+                            </mat-menu>
+                   
+                        </div>   
+                    </div>
+                </mat-card-content>  
+            <mat-card-content style="margin:0; padding-top: 0!important; padding-bottom: 0!important;">  
+                            <div>
+                                <canvas id="archivedChart">{{archivedChart}}</canvas>
+                            </div>
+                            <div style="padding: 0;" class="p-10">
+                                <div fxLayout="row" fxLayoutAlign="center center" class="ml-auto">
+                                    <ul style="padding: 0;" class="list-inline">
+                                        <li>
+                                            <h6 class="text-success m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Cases</h6> </li>
+                                        <li>
+                                            <h6 class=" text-info m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Recoveries</h6> </li>
+                                        <li>
+                                            <h6 class="text-purple m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Deaths</h6> </li>
+                                     </ul>
+                                </div>
+                                </div>
+                </mat-card-content>  
+                <mat-card-content>  
+                    <div class="d-flex flex-wrap" fxLayout='row wrap' fxLayoutAlign="space-evenly center">
+                        <mat-slide-toggle color="primary" checked="true" class ="tp-margin" (change)="toggleLog()">
+                            Logarithmic
+                        </mat-slide-toggle>
+
+                        <mat-checkbox color="primary" checked="true" value="checked" id="tC" (change)="toggleData0()">Total Cases</mat-checkbox>
+                        <mat-checkbox color="primary" checked="true" value="checked" id="tR" (change)="toggleData1()">Recovered</mat-checkbox>
+                        <mat-checkbox color="primary" checked="true" value="checked" id="tD" (change)="toggleData2()">Deaths</mat-checkbox>
+                    </div>
+                </mat-card-content>         
+            </mat-card>
+    </div>
+    <!-- column -->    
+    <!-- column -->   
+    <div fxFlexOrder.xs="1" fxFlex.gt-lg="33" fxFlex.gt-md="33"  fxFlex.gt-xs="100" fxFlex="100" >
+        <mat-card>
+            <mat-card-content>
+                <div fxLayout="row wrap" >
+                <div fxFlex.gt-lg="100" fxFlex.gt-md="100"  fxFlex.gt-xs="100" fxFlex="100">
+                <mat-card-title>Live Stats: {{this.selectedCountry.country}}</mat-card-title>
+                <div fxLayoutAlign="end start">
+                <div fxShow fxHide.gt-xs>
+                    <button _ngcontent-lyf-c302="" mat-raised-button="" color="warn" class="mat-focus-indicator mat-raised-button mat-button-base mat-warn" ng-reflect-color="warn" [matMenuTriggerFor]="countries">Change</button>
+                    <mat-menu id="chartType" name="Chart Type" #countries="matMenu">
+                              <button mat-menu-item  *ngFor="let item of timeSeries" value="item" let i = "index"  (click)="selectCountry(item.country)">{{ item.country }}</button>
+                    </mat-menu>
+                </div>   
+                </div>  
+            </div>
+            </div> 
+                    <div><canvas height="225px" id="ladChart"></canvas></div>
+                    <ul class="list-inline text-left">
+                        <li>
+                            <h6 style="margin-bottom:5%;" class="text-purple">{{formatNumber(this.selectedCountry.totalCases)}} Total Confirmed Cases</h6>
+                            <h6 class="text-success m-0">
+                                <i class="mdi mdi-checkbox-blank-circle font-12 m-r-10 "></i>{{formatNumber(this.selectedCountry.activeCases)}} Active</h6>
+                        </li><br>
+                        <li>
+                            <h6 class=" text-info  m-0">
+                                <i class="mdi mdi-checkbox-blank-circle font-12 m-r-10"></i>{{formatNumber(this.selectedCountry.totalRecoveries)}} Recoveries</h6>
+                        </li><br>
+                        <li>
+                            <h6 class=" text-purple  m-0" text-align="left">
+                                <i class="mdi mdi-checkbox-blank-circle font-12 m-r-10"></i>{{formatNumber(this.selectedCountry.totalDeaths)}} Deaths</h6>
+                        </li>
+                    </ul>     
+                <hr>
+                <div >
+                    <mat-card-subtitle style="padding-top:4%;">{{formatNumber(this.selectedCountry.newCases)}} Cases Today  [ +{{formatNumber(this.yesterCases)}} yesterday ]</mat-card-subtitle>
+                    <mat-card-subtitle>{{formatNumber(this.selectedCountry.newDeaths)}} Deaths Today [ +{{formatNumber(this.yesterDeaths)}} yesterday ]</mat-card-subtitle>
+                    <mat-card-subtitle style="margin-bottom: 0!important;">{{formatNumber(this.selectedCountry.seriousCritical)}} in a Critical State</mat-card-subtitle>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <!-- column -->    
+</div>
+
+<mat-card class="no-shadow">
+    <mat-card-content>
+    <mat-card-title>World Statistics Table</mat-card-title>
+    <mat-card-subtitle>Updated every 2 minutes</mat-card-subtitle>
+</mat-card-content>
+<mat-card-content style="padding:0!important;">
+      <mat-toolbar color="primary">
+        <div style="block-size: inherit; padding-top: 1%; width:30%;">
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Country">
+            </mat-form-field>
+            <button mat-button href="#" mat-icon-button>
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+        <span fxFlex></span> 
+        <button mat-button href="#" mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </mat-toolbar>
+      <div  [style.overflow]="'auto'" [style.max-height.px]="'600'">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="country">
+          <th mat-header-cell *matHeaderCellDef>Country</th>
+          <td mat-cell *matCellDef="let element"> {{formatNumber(element.country)}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="totalCases">
+          <th style="text-align:right!important;"  mat-header-cell *matHeaderCellDef>Total Cases</th>
+          <td style="text-align:right!important; color:orangered;" mat-cell *matCellDef="let element"> {{formatNumber(element.totalCases)}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="newCases">
+          <th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>New Cases</th>
+          <td style="text-align:right!important; color:orangered;" mat-cell *matCellDef="let element">{{positive(formatNumber(element.newCases))}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="totalRecoveries">
+          <th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>Total Recoveries</th>
+          <td style="text-align:right!important; color:green;" mat-cell *matCellDef="let element"> {{formatNumber(element.totalRecoveries)}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="seriousCritical">
+            <th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>Seriously Critical</th>
+            <td style="text-align:right!important; color:red;" mat-cell *matCellDef="let element"> {{formatNumber(element.seriousCritical)}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="totalDeaths">
+            <th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>Total Deaths</th>
+            <td style="text-align:right!important; color:black;" mat-cell *matCellDef="let element"> {{formatNumber(element.totalDeaths)}} </td>
+        </ng-container>   
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="newDeaths">
+            <th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>New Deaths</th>
+            <td style="text-align:right!important; color:black;" mat-cell *matCellDef="let element"> {{positive(formatNumber(element.newDeaths))}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    </mat-card-content>
+  </mat-card>
+

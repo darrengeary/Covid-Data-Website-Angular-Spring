@@ -1,0 +1,35 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+<div class="quick-facts">
+    <mat-card-subtitle style="color:whitesmoke!important;">World Statistics</mat-card-subtitle>
+    <mat-list>
+        <mat-list-item>
+            <h3 style="color:#F95700FF!important;" matLine>{{formatNumber(this.worldLive.totalCases)}}</h3>
+            <p matLine class="text-muted">Total Cases</p>
+          </mat-list-item>
+          <mat-list-item>
+              <h3 style="color: yellow!important;" matLine>{{formatNumber(this.worldLive.seriousCritical)}}</h3>
+              <p matLine class="text-muted">Serious Critical</p>
+          </mat-list-item>
+          <mat-list-item>
+              <h3 style="color: greenyellow!important;" matLine>{{formatNumber(this.worldLive.totalRecoveries)}}</h3>
+              <p matLine class="text-muted">Total Recoveries</p>
+          </mat-list-item>
+          <mat-list-item>
+              <h3 style="color:red!important;" matLine>{{formatNumber(this.worldLive.totalDeaths)}}</h3>
+              <p matLine class="text-muted">Total Deaths</p>
+          </mat-list-item>
+    </mat-list>    
+</div>
+<mat-nav-list appAccordion>
+    <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected" group="{{menuitem.state}}">
+        <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+            <mat-icon>{{ menuitem.icon }}</mat-icon> 
+            <span>{{ menuitem.name }}</span> 
+            <span fxFlex></span> 
+            <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span> 
+        </a>   
+    </mat-list-item>
+</mat-nav-list>
+

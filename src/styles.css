@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+.mat-toolbar.mat-primary{
+    background : #7dad0a !important; }
+    .mat-flat-button.mat-warn, .mat-raised-button.mat-warn, .mat-fab.mat-warn, .mat-mini-fab.mat-warn{
+        background : #D56C06 !important;
+    }
+    .logos{
+        height: 50px;    
+        overflow: hidden;
+        margin: 10px;
+        text-align: center;
+        line-height: 50px;
+        object-fit:contain;
+    
+    }
+    .logos img{
+        object-fit:contain;
+        max-height:100%; 
+    }
+
+    .logos #logotext{
+        max-height:70% !important;
+        margin-bottom: 3%;
+        }
+      

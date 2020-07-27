@@ -1,0 +1,118 @@
+
+<div fxLayout="row wrap">
+<div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
+	<mat-card fxLayout='row wrap'>
+		<mat-card-content style="padding-bottom:0!important;">  
+			<div fxLayout="column" fxLayoutAlign=" stretch" >
+				<mat-card-title>Irish Covid-19 Breakdown</mat-card-title>
+					<mat-card-subtitle>
+					Data collected by HSPC on {{getDate()}}
+					</mat-card-subtitle>
+			</div>
+		</mat-card-content> 
+		<div fxFlexOrder.xs="1" fxLayout='column' fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
+		<mat-card-content class="ageChart"> 
+					<div><canvas height="160%" id="ageChart"></canvas></div>
+		</mat-card-content> 
+
+		</div>
+		<div fxFlexOrder.xs="0" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
+		<mat-card-content style="margin:0; padding:0;"> 
+			<div class="quick-facts" style="margin-left:5%;">
+				<div fxLayout='row' fxLayout.xs="column" fxLayoutGap="15px"> 
+					<div class="box">
+						<h3 style="color:rgb(211, 74, 0)!important;" matLine>{{this.profile.attributes.HospitalisedCovidCases}}</h3>
+						<p matLine>Hospitalised</p>
+					</div>
+					<div class="box">
+						<h3 style="color:rgb(211, 74, 0)!important;" matLine>{{risk(this.profile.attributes.HospitalisedCovidCases, this.profile.attributes.TotalConfirmedCovidCases)}}%</h3>
+						<p matLine>of Cases in Hospital</p>
+					</div>
+					<div class="box">
+						<h3 style="color:rgb(255, 187, 0)!important;" matLine>{{this.profile.attributes.RequiringICUCovidCases}}</h3>
+						<p matLine>Cases in ICU</p>
+					</div>
+					<div class="box">
+						<h3 style="color:rgb(255, 187, 0)!important;" matLine>{{risk(this.profile.attributes.RequiringICUCovidCases, this.profile.attributes.HospitalisedCovidCases)}}%</h3>
+						<p matLine>of Hospitalised in ICU</p>
+					</div>
+				</div>
+	</div>
+		</mat-card-content> 
+	</div>
+</mat-card>
+</div>
+<div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">	
+<mat-card>
+
+<div fxLayout="column" fxFlex >
+	<mat-card-content style="margin:0!important; padding-bottom:0!important"> 
+		<div fxFlexOrder.xs="100" fxFlex.gt-lg="100" fxFlex.gt-md="100" fxFlex.gt-xs="100" fxFlex="100">
+			<mat-card-content fxLayoutGap="15px" fxLayoutAlight="centre stretch" fxLayout="row wrap" style="margin:0; padding:0;"> 
+						<div class="box">
+							<h3 style="color:rgb(211, 74, 0)!important;" matLine>{{formatNumber(this.ireland.totalCases)}}</h3>
+							<p matLine>People Diagnosed</p>
+						</div>
+						<div class="box">
+							<h3 style="color:rgb(0, 0, 0)!important;" matLine>{{formatNumber(this.ireland.totalDeaths)}}</h3>
+							<p matLine>Deaths</p>
+						</div>
+			</mat-card-content> 
+		</div>
+	</mat-card-content> 
+	<mat-card-content style="padding-top:0!important"> 
+		<hr>
+			<mat-card-title style="margin-top:30px">Transmission of Cases %</mat-card-title>
+			<div><canvas height="150px" id="transChart"></canvas></div> 
+		<hr>
+			<mat-card-title style="margin-top:30px">Gender of Cases</mat-card-title>
+			<div><canvas height="150px" id="genderChart"></canvas></div>
+	</mat-card-content> 
+</div>
+</mat-card>
+</div>
+</div>
+	<!-- column -->    
+<mat-card fxLayout='row wrap'>
+	<div fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="100" fxFlex="100">
+	<mat-card-content>  
+		<mat-card-title>Cases by County</mat-card-title>
+		<mat-card-subtitle>
+			Data collected by HSPC on {{getDate()}}
+		</mat-card-subtitle>
+		<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1dbhEzKukp8Y8IeB7s1uS8DycqqLIcpsP"
+						width="100%" height="600px"></iframe>
+
+	</mat-card-content> 
+</div>
+<div style="margin-top: 35px;" fxFlex.gt-lg="50" fxFlex.gt-md="50" fxFlex.gt-xs="50" fxFlex="100">
+	<mat-card-content>  
+      <div [style.overflow]="'auto'" [style.max-height.px]="'625'">
+      <table mat-table [dataSource]="dataSource" [style.width]="'100%'">
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="county">
+          <th style="text-align:left!important;" mat-header-cell *matHeaderCellDef>County</th>
+          <td style="text-align:left!important; color:black;" mat-cell *matCellDef="let element"> {{element.attributes.CountyName}} </td>
+		</ng-container>
+		<!-- Position Column -->
+		<ng-container matColumnDef="cases">
+			<th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>Confirmed</th>
+			<td style="text-align:right!important; color:rgb(255, 0, 0);" mat-cell *matCellDef="let element"> {{element.attributes.CovidCases}} </td>
+		</ng-container>
+		<ng-container matColumnDef="population">
+			<th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>% of all Cases</th>
+			<td style="text-align:right!important; color:rgb(187, 100, 0);" mat-cell *matCellDef="let element"> {{percentage(element.attributes.CovidCases)}}%</td>
+		</ng-container>
+		<ng-container matColumnDef="risk">
+			<th style="text-align:right!important;" mat-header-cell *matHeaderCellDef>% of Population</th>
+			<td style="text-align:right!important; color:rgb(0, 143, 19);" mat-cell *matCellDef="let element"> {{risk(element.attributes.CovidCases, element.attributes.PopulationCensus16)}}%</td>
+		</ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+	</div>
+	</mat-card-content>
+</div>
+</mat-card>
+
